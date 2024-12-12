@@ -3,18 +3,28 @@ import modules.functions as ft
 
 todos = ft.get_todos()
 
+# st.set_page_config(layout='wide')
 
 def add_todo():
+    # analogous to key-value pair of GET request
     todo = st.session_state['new_todo'].strip() + '\n'
     if todo != '\n': # prevents empty input
         print('Adding', todo)
+        if todos[-1][-1] != '\n':
+            '''ensure new item starts on new line'''
+            # print('INSERTING Break Line')
+            # raw_string=rf"last character is: {todos[-1]}"
+            # print(raw_string)
+            todos[-1] += '\n'
+#             print('after revision: ', repr(todos[-1]))
         todos.append(todo)
         ft.write_todos(todos)
 
 
 st.title('My Todo App')
 st.subheader('This is Sparta!')
-st.write('This app strives to increase your productivity.')
+st.write('This app strives to increase your <b>productivity</b>.',
+         unsafe_allow_html=True) # </h1></h1>
 
 for t in todos:
     checkbox = st.checkbox(t, key=t)
@@ -38,9 +48,10 @@ st.text_input(label='Enter a todo:', placeholder='Add a new todo...',
 # notice that whenever user presses the enter button,
 # the entire script is executed from TOP-to-BOTTOM!
 
-print('the lion sleeps tonight')
+print('Todo Web App is running...')
 
 # st.session_state  # surprisingly, this will be rendered
+# value of checkbox object will be false if unchecked
 
 # streamlit trivia
 # the script executes on every reload/refresh
